@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
 from .models import Usuario
 from .database import db
 from sqlalchemy.exc import IntegrityError
@@ -43,3 +43,29 @@ def register():
     except Exception as e:
         print(e)  # Log para ajudar na depuração
         return jsonify({"error": "Erro ao cadastrar. Tente novamente mais tarde."}), 500
+
+# Rota para processar o login
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    senha = data.get('password')
+
+    user = Usuario.query.filter_by(email=email).first()
+
+    if user and user.check_password(senha):
+        session['user_id'] = user.id  # Armazena o ID do usuário na sessão
+        return jsonify({"message": "Login bem-sucedido"}), 200
+    else:
+        return jsonify({"error": "E-mail ou senha incorretos"}), 401
+
+# Rota para a tela principal
+@auth_bp.route('/home', methods=['GET'])
+def main_page():
+    return render_template('home.html')  # Certifique-se de que você tem um arquivo home.html
+
+@auth_bp.route('/logout', methods=['GET'])
+def logout():
+    session.pop('user_id', None)  # Remove o usuário da sessão
+    return redirect(url_for('auth.home'))  # Redireciona para a página de login
+

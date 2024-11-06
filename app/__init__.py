@@ -4,7 +4,7 @@ from .database import db
 from .routes import auth_bp
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="static")
     app.config.from_object(Config)
 
     # Inicializar o banco de dados
@@ -15,6 +15,6 @@ def create_app():
 
     # Criar as tabelas do banco de dados
     with app.app_context():
-        db.create_all()
+        db.create_all()  # Cria todas as tabelas definidas nos modelos
 
     return app

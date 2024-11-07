@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">AGENDAMENTO</h1>
+    </header>
+
+    <form id="formAgendamento" action="{{ url_for('auth.agendamento') }}" method="POST">
+        <label for="local">Local do Atendimento:</label>
+        <select name="local" required>
+            <option value="Local 1">Local 1</option>
+            <option value="Local 2">Local 2</option>
+        </select>
+
+        <label for="setor">Setor do Atendimento:</label>
+        <select name="setor" required>
+            <option value="Setor 1">Setor 1</option>
+            <option value="Setor 2">Setor 2</option>
+        </select>
+
+        <label for="servico">Serviço:</label>
+        <select name="servico" required>
+            <option value="Serviço 1">Serviço 1</option>
+            <option value="Serviço 2">Serviço 2</option>
+        </select>
+
+        <label for="data">Data:</label>
+        <input type="date" name="data" id="data" required min="" />
+
+        <label for="horario">Horário:</label>
+        <input type="time" name="horario" id="horario" required>
+
+        <label for="nome">Nome Completo:</label>
+        <input type="text" name="nome" required>
+
+        <label for="cpf">CPF:</label>
+        <input type="text" name="cpf" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" required>
+
+        <label for="telefone">Telefone:</label>
+        <input type="tel" name="telefone" required>
+
+        <button type="submit">Agendar</button>
+    </form>
+
+    <div id="mensagemSucesso" style="display: none;">Agendamento realizado com sucesso!</div>
+
+    <!-- Script JavaScript para configurar data mínima e horários de hora em hora -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const dataInput = document.getElementById("data");
+            const horarioInput = document.getElementById("horario");
+
+            // Função para definir a data mínima (não permitir datas passadas)
+            function definirDataMinima() {
+                const hoje = new Date();
+                const ano = hoje.getFullYear();
+                const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Mes começa do zero, então adicionamos 1
+                const dia = String(hoje.getDate()).padStart(2, '0');
+                const dataFormatada = `${ano}-${mes}-${dia}`;
+                dataInput.setAttribute("min", dataFormatada);
+            }
+
+            // Função para preencher o campo de horário com valores de hora em hora
+            function preencherHorarios() {
+                const horasDisponiveis = [];
+                for (let i = 0; i < 24; i++) {
+                    let hora = String(i).padStart(2, '0'); // Adiciona zero à esquerda
+                    horasDisponiveis.push(`${hora}:00`);
+                }
+
+                horarioInput.innerHTML = ""; // Limpa as opções existentes
+                horasDisponiveis.forEach(hora => {
+                    const option = document.createElement("option");
+                    option.value = hora;
+                    option.textContent = hora;
+                    horarioInput.appendChild(option);
+                });
+            }
+
+            // Chama as funções ao carregar a página
+            definirDataMinima();
+            preencherHorarios();
+        });
+    </script>
+</body>
+</html>

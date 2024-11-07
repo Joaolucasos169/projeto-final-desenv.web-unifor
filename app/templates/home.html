@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela Principal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">AGENDAMENTO</h1>
+    </header>
+    <nav class="navigation-bar">
+        <div class="nav-links">
+            <a href="{{ url_for('auth.agendamento') }}" class="navigation-link">Gerar Senha</a>
+            <a href="/" class="navigation-link">Reimprimir</a>
+            <a href="/" class="navigation-link">Cancelar Senha</a>
+        </div>
+        <!-- Link de logout à direita -->
+        <a href="{{ url_for('auth.logout') }}" class="navigation-link logout-link">Sair</a>
+    </nav>
+    <main class="main-content">
+        <div class="option-card">
+            <a href="{{ url_for('auth.agendamento') }}">
+            <img src="{{ url_for('static', filename='images/calendar-icon.png') }}" alt="Gerar Senha" class="option-icon">
+            <p class="option-text">Gerar Senha Padrão</p>
+            </a>
+        </div>
+        <div class="option-card">
+            <img src="{{ url_for('static', filename='images/printer-icon.png') }}" alt="Reimprimir" class="option-icon">
+            <p class="option-text">Reimprimir</p>
+        </div>
+        <div class="option-card">
+            <img src="{{ url_for('static', filename='images/cancel-icon.png') }}" alt="Cancelar Senha" class="option-icon">
+            <p class="option-text">Cancelar Senha</p>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Agendamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Cabeçalho específico para detalhes do agendamento -->
+    <header class="header-detalhes-agendamento">
+        <h1 class="titulo-header">Detalhes do Agendamento</h1>
+    </header>
+
+    <!-- Container específico para a tela de detalhes -->
+    <div class="container-detalhes">
+        <div class="detalhes">
+            <p><strong>Código do Agendamento:</strong> {{ agendamento.id }}</p>
+            <p><strong>Data e Hora:</strong> {{ agendamento.data_agendamento }}</p>
+            <p><strong>Nome Completo:</strong> {{ agendamento.nome }}</p>
+            <p><strong>CPF:</strong> {{ agendamento.cpf }}</p>
+            <p><strong>Email:</strong> {{ agendamento.email }}</p>
+            <p><strong>Telefone:</strong> {{ agendamento.telefone }}</p>
+            <p><strong>Local:</strong> {{ agendamento.local }}</p>
+            <p><strong>Setor:</strong> {{ agendamento.setor }}</p>
+            <p><strong>Serviço:</strong> {{ agendamento.servico }}</p>
+            <p><strong>Uma cópia foi encaminhada para seu E-mail.</strong></p>
+        </div>
+        <a href="{{ url_for('auth.main_page') }}" class="botao">Voltar para a Tela Principal</a>
+    </div>
+</body>
+</html>

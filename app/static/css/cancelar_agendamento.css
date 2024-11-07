@@ -1,0 +1,119 @@
+/* Estilos Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Cabeçalho */
+.cancelamento-header {
+    background-color: #3e8b88;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.cancelamento-titulo {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.cancelamento-voltar {
+    position: absolute;
+    right: 20px; /* Muda a posição para o lado direito */
+    top: 20px;
+    font-size: 1rem;
+    color: white;
+    text-decoration: none;
+    
+}
+
+.cancelamento-voltar:hover {
+    text-decoration: underline;
+}
+
+/* Container Principal */
+.cancelamento-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cancelamento-descricao {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Formulário de Cancelamento */
+.cancelamento-formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cancelamento-formulario input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+.cancelamento-formulario input:focus {
+    border-color: #3e8b88;
+    outline: none;
+}
+
+.botao-cancelar {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background-color: #3e8b88;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-cancelar:hover {
+    background-color: #e74c3c;
+}
+
+.botao-cancelar:active {
+    background-color: #e74c3c;
+}
+
+.mensagens {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.mensagem.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.mensagem.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+

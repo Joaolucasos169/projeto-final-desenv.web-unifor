@@ -1,12 +1,8 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
-from .models import Usuario
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, flash
+from .models import Usuario, Agendamento
 from .database import db
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
-from .models import Usuario, Agendamento
-from .models import Agendamento
-from datetime import datetime
-
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -66,18 +62,18 @@ def login():
 # Rota para a tela principal
 @auth_bp.route('/home', methods=['GET'])
 def main_page():
-    return render_template('home.html')  # Certifique-se de que você tem um arquivo home.html
+    return render_template('home.html')
 
+# Rota para processar o logout
 @auth_bp.route('/logout', methods=['GET'])
 def logout():
     session.pop('user_id', None)  # Remove o usuário da sessão
     return redirect(url_for('auth.home'))  # Redireciona para a página de login
 
-# Rota gerar senha
+# Rota para a tela de agendamento
 @auth_bp.route('/agendamento')
 def agendamento():
     return render_template('agendamento.html')
-
 
 # Rota para processar o agendamento
 @auth_bp.route('/agendamento', methods=['POST'])
@@ -124,3 +120,54 @@ def process_agendamento():
 def detalhes_agendamento(agendamento_id):
     agendamento = Agendamento.query.get_or_404(agendamento_id)
     return render_template('detalhes_agendamento.html', agendamento=agendamento)
+
+# Rota para exibir a página de reimpressão de agendamento
+@auth_bp.route('/reimprimir_agendamento', methods=['GET'])
+def reimprimir_agendamento_page():
+    return render_template('reimprimir_agendamento.html')
+
+# Rota para processar a reimpressão de agendamento
+@auth_bp.route('/reimprimir_agendamento', methods=['POST'])
+def reimprimir_agendamento():
+    agendamento_id = request.form.get('agendamento_id')  # Captura o ID do agendamento
+    if not agendamento_id:
+        flash("Erro: ID do agendamento não foi fornecido.", "error")
+        return redirect(url_for('auth.reimprimir_agendamento_page'))
+    
+    # Procura o agendamento no banco de dados
+    agendamento = Agendamento.query.get(agendamento_id)
+    
+    if not agendamento:
+        # Caso o agendamento não seja encontrado
+        flash("Agendamento não encontrado.", "error")
+        return render_template('reimprimir_agendamento.html')
+    
+    # Caso o agendamento seja encontrado, redireciona para a página de detalhes
+    return redirect(url_for('auth.detalhes_agendamento', agendamento_id=agendamento_id))
+
+# Rota para exibir a página de cancelamento de agendamento
+@auth_bp.route('/cancelar_agendamento', methods=['GET'])
+def cancelar_agendamento_page():
+    return render_template('cancelar_agendamento.html')
+
+# Rota POST para cancelar o agendamento
+@auth_bp.route('/cancelar_agendamento', methods=['POST'])
+def cancelar_agendamento():
+    agendamento_id = request.form.get('agendamento_id')
+    
+    # Procura o agendamento no banco de dados
+    agendamento = Agendamento.query.get(agendamento_id)
+    
+    if agendamento:
+        # Realiza o cancelamento, neste caso excluindo o agendamento
+        db.session.delete(agendamento)
+        db.session.commit()
+        
+        # Mensagem de sucesso
+        flash("Agendamento cancelado com sucesso!", "success")
+    else:
+        # Mensagem de erro se o agendamento não for encontrado
+        flash("Agendamento não encontrado.", "error")
+    
+    # Renderiza a mesma página de cancelamento com a mensagem de flash
+    return render_template('cancelar_agendamento.html')

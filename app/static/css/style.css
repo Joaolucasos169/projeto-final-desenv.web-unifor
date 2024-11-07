@@ -96,6 +96,7 @@ button:hover {
 .header-title {
     font-size: 24px;
     font-weight: bold;
+    display: inline-block;
 }
 
 /* Barra de navegação */
@@ -196,6 +197,7 @@ button:hover {
     display: flex;
     justify-content: center; /* Centraliza as opções de navegação */
     width: 100%; /* Garante que as opções ocupem todo o espaço disponível */
+    margin-left: 60px;
 }
 
 .navigation-link {

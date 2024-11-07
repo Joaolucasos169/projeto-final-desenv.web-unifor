@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reimprimir Agendamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reimprimir_senha.css') }}">
+</head>
+<body>
+    <!-- Exibir as mensagens flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="mensagens">
+                {% for category, message in messages %}
+                    <div class="mensagem {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Cabeçalho com título e botão voltar -->
+    <header class="reimpressao-header">
+        <h1 class="reimpressao-titulo">REIMPRIMIR AGENDAMENTO</h1>
+        <a href="{{ url_for('auth.main_page') }}" class="reimpressao-voltar">Voltar</a>
+    </header>
+
+    <main class="reimpressao-container">
+        <p class="reimpressao-descricao">
+            Para reimprimir o agendamento, digite o código do agendamento no campo abaixo e clique no botão "Reimprimir".
+        </p>
+        <div class="reimpressao-formulario">
+            <form action="{{ url_for('auth.reimprimir_agendamento_page') }}" method="POST">
+                <input type="text" name="agendamento_id" placeholder="Digite o ID do Agendamento" required>
+                <button type="submit" class="botao-reimprimir">Reimprimir</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

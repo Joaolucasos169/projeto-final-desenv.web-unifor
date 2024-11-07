@@ -13,8 +13,8 @@
     <nav class="navigation-bar">
         <div class="nav-links">
             <a href="{{ url_for('auth.agendamento') }}" class="navigation-link">Gerar Senha</a>
-            <a href="/" class="navigation-link">Reimprimir</a>
-            <a href="/" class="navigation-link">Cancelar Senha</a>
+            <a href="{{ url_for('auth.reimprimir_agendamento_page') }}" class="navigation-link">Reimprimir</a>
+            <a href="{{ url_for('auth.cancelar_agendamento') }}" class="navigation-link">Cancelar Senha</a>
         </div>
         <!-- Link de logout à direita -->
         <a href="{{ url_for('auth.logout') }}" class="navigation-link logout-link">Sair</a>
@@ -22,17 +22,21 @@
     <main class="main-content">
         <div class="option-card">
             <a href="{{ url_for('auth.agendamento') }}">
-            <img src="{{ url_for('static', filename='images/calendar-icon.png') }}" alt="Gerar Senha" class="option-icon">
-            <p class="option-text">Gerar Senha Padrão</p>
+                <img src="{{ url_for('static', filename='images/calendar-icon.png') }}" alt="Gerar Senha" class="option-icon">
+                <p class="option-text">Gerar Senha Padrão</p>
             </a>
         </div>
         <div class="option-card">
-            <img src="{{ url_for('static', filename='images/printer-icon.png') }}" alt="Reimprimir" class="option-icon">
-            <p class="option-text">Reimprimir</p>
+            <a href="{{ url_for('auth.reimprimir_agendamento_page') }}">
+                <img src="{{ url_for('static', filename='images/printer-icon.png') }}" alt="Reimprimir" class="option-icon">
+                <p class="option-text">Reimprimir</p>
+            </a>
         </div>
         <div class="option-card">
+            <a href="{{ url_for('auth.cancelar_agendamento_page') }}">
             <img src="{{ url_for('static', filename='images/cancel-icon.png') }}" alt="Cancelar Senha" class="option-icon">
             <p class="option-text">Cancelar Senha</p>
+            </a>
         </div>
     </main>
 </body>

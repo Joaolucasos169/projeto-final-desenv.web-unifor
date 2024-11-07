@@ -24,10 +24,25 @@ class Agendamento(db.Model):
     __tablename__ = 'agendamentos'
     id = db.Column(db.Integer, primary_key=True)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
-    data_agendamento = db.Column(db.DateTime, nullable=False)
-    descricao = db.Column(db.Text)
+    local = db.Column(db.String(50), nullable=False)
+    setor = db.Column(db.String(50), nullable=False)
+    servico = db.Column(db.String(50), nullable=False)
+    data_agendamento = db.Column(db.DateTime, nullable=False)  # Ajustando para um único campo DateTime
 
-    def __init__(self, usuario_id, data_agendamento, descricao):
+    # Dados do usuário
+    nome = db.Column(db.String(100), nullable=False)
+    cpf = db.Column(db.String(14), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    telefone = db.Column(db.String(15), nullable=False)
+
+    def __init__(self, usuario_id, local, setor, servico, nome, cpf, email, telefone, data_agendamento, descricao=None):
         self.usuario_id = usuario_id
+        self.local = local
+        self.setor = setor
+        self.servico = servico
+        self.nome = nome
+        self.cpf = cpf
+        self.email = email
+        self.telefone = telefone
         self.data_agendamento = data_agendamento
-        self.descricao = descricao
+        

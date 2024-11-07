@@ -12,7 +12,7 @@
     </header>
     <nav class="navigation-bar">
         <div class="nav-links">
-            <a href="/" class="navigation-link">Gerar Senha</a>
+            <a href="{{ url_for('auth.agendamento') }}" class="navigation-link">Gerar Senha</a>
             <a href="/" class="navigation-link">Reimprimir</a>
             <a href="/" class="navigation-link">Cancelar Senha</a>
         </div>
@@ -21,8 +21,10 @@
     </nav>
     <main class="main-content">
         <div class="option-card">
+            <a href="{{ url_for('auth.agendamento') }}">
             <img src="{{ url_for('static', filename='images/calendar-icon.png') }}" alt="Gerar Senha" class="option-icon">
             <p class="option-text">Gerar Senha Padrão</p>
+            </a>
         </div>
         <div class="option-card">
             <img src="{{ url_for('static', filename='images/printer-icon.png') }}" alt="Reimprimir" class="option-icon">

@@ -3,6 +3,10 @@ from .models import Usuario
 from .database import db
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
+from .models import Usuario, Agendamento
+from .models import Agendamento
+from datetime import datetime
+
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -69,3 +73,54 @@ def logout():
     session.pop('user_id', None)  # Remove o usuário da sessão
     return redirect(url_for('auth.home'))  # Redireciona para a página de login
 
+# Rota gerar senha
+@auth_bp.route('/agendamento')
+def agendamento():
+    return render_template('agendamento.html')
+
+
+# Rota para processar o agendamento
+@auth_bp.route('/agendamento', methods=['POST'])
+def process_agendamento():
+    local = request.form['local']
+    setor = request.form['setor']
+    servico = request.form['servico']
+    data = request.form['data']
+    horario = request.form['horario']
+    nome = request.form['nome']
+    cpf = request.form['cpf']
+    email = request.form['email']
+    telefone = request.form['telefone']
+    
+    # Combinar data e horário em um único datetime
+    data_hora_str = f"{data} {horario}"
+    data_agendamento = datetime.strptime(data_hora_str, '%Y-%m-%d %H:%M')
+
+    # Verificar se o usuário está logado para associar ao agendamento
+    usuario_id = 1  # Substitua isso com a lógica para obter o ID do usuário logado
+
+    # Criar o agendamento
+    novo_agendamento = Agendamento(
+        usuario_id=usuario_id,
+        local=local,
+        setor=setor,
+        servico=servico,
+        nome=nome,
+        cpf=cpf,
+        email=email,
+        telefone=telefone,
+        data_agendamento=data_agendamento,
+        descricao="Agendamento realizado com sucesso"
+    )
+
+    db.session.add(novo_agendamento)
+    db.session.commit()
+
+    # Redireciona para a página de detalhes do agendamento
+    return redirect(url_for('auth.detalhes_agendamento', agendamento_id=novo_agendamento.id))
+
+# Rota para exibir os detalhes do agendamento
+@auth_bp.route('/detalhes_agendamento/<int:agendamento_id>', methods=['GET'])
+def detalhes_agendamento(agendamento_id):
+    agendamento = Agendamento.query.get_or_404(agendamento_id)
+    return render_template('detalhes_agendamento.html', agendamento=agendamento)
